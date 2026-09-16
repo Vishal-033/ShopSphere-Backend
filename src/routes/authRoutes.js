@@ -1,21 +1,11 @@
-
-// const express = require("express");
-
-// const { registerUser } = require("../controllers/authController");
-
-// const router = express.Router();
-
-// // Register User
-// router.post("/register", registerUser);
-
-// module.exports = router;
-
-
 const express = require("express");
 
+const authMiddleware = require("../middleware/authMiddleware");
+
 const {
-  registerUser,
-  loginUser,
+    registerUser,
+    loginUser,
+    getMe
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -25,5 +15,8 @@ router.post("/register", registerUser);
 
 // Login
 router.post("/login", loginUser);
+
+// Get logged-in user
+router.get("/me", authMiddleware, getMe);
 
 module.exports = router;

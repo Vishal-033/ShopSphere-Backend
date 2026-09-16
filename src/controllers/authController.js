@@ -116,6 +116,27 @@ const registerUser = async (req, res) => {
 };
 
 
+
+
+
+const getMe = async (req, res) => {
+    try {
+        return res.status(200).json({
+            success: true,
+            user: {
+            id: req.user.userId,
+                email: req.user.email,
+                role: req.user.role
+            }
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
 // =========================
 // LOGIN USER
 // =========================
@@ -159,6 +180,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         userId: user._id,
+        email: user.email,
         role: user.role,
       },
       process.env.JWT_SECRET,
@@ -188,4 +210,5 @@ const loginUser = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+   getMe,
 };
